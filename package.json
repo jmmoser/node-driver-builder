@@ -1,0 +1,30 @@
+{
+  "name": "node-drivers-builder",
+  "version": "0.0.1",
+  "description": "Build drivers from configuration files",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jmmoser/node-drivers-builder.git"
+  },
+  "keywords": [
+    "driver",
+    "drivers",
+    "build",
+    "builer",
+    "node-drivers",
+    "node-drivers-builder"
+  ],
+  "author": "Justin Moser",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jmmoser/node-drivers-builder/issues"
+  },
+  "homepage": "https://github.com/jmmoser/node-drivers-builder#readme",
+  "dependencies": {
+    "node-drivers": "^1.0.19"
+  }
+}
