@@ -70,8 +70,8 @@ class Driver {
       throw new Error('Tag not available: ' + tagName);
     }
 
-    if (tag.alias != null) {
-      tag = tag.alias[action];
+    if (tag.actions != null) {
+      tag = tag.actions[action];
       if (tag == null) {
         throw new Error('Tag alias action not available: ' + tagName + ', ' + action);
       }
@@ -228,68 +228,72 @@ class Driver {
       }
     }
 
-    if (config.rawTags != null) {
-      let keys = Object.keys(config.rawTags);
-      for (let i = 0; i < keys.length; i++) {
-        let tag = config.rawTags[keys[i]];
-        let tagStr = JSON.stringify(tag, null, 2);
+    let tagChecker = function(tag) {
+      if (isEmptyString(tag.address)) {
+        return 'rawTag \'address\' must be specified: ' + tagStr;
+      }
 
-        if (tag.action == null || tag.action.length === 0) {
-          return 'rawTag \'action\' must be specified: ' + tagStr;
+      if (tag.interpolation != null) {
+        if (tag.interpolation.type == null || tag.interpolation.type.length === 0) {
+          return 'rawTag interpolation \'type\' must be specified: ' + tagStr;
         }
 
-        if (tag.address == null || tag.address.length === 0) {
-          return 'rawTag \'address\' must be specified: ' + tagStr;
+        if (INTERPOLATION_TYPES[tag.interpolation.type] == null) {
+          return 'rawTag interpolation type \'' + tag.interpolation.type + '\' is not available: ' + tagStr;
         }
 
-        if (tag.interpolation != null) {
-          if (tag.interpolation.type == null || tag.interpolation.type.length === 0) {
-            return 'rawTag interpolation \'type\' must be specified: ' + tagStr;
+        if (tag.interpolation.type === 'linear') {
+          if (tag.interpolation.raw == null) {
+            return 'rawTag linear interpolation must specify \'raw\': ' + tagStr;
           }
 
-          if (INTERPOLATION_TYPES[tag.interpolation.type] == null) {
-            return 'rawTag interpolation type \'' + tag.interpolation.type + '\' is not available: ' + tagStr;
+          if (!Array.isArray(tag.interpolation.raw)) {
+            return 'rawTag linear interpolation \'raw\' must be an array:' + tagStr;
           }
 
-          if (tag.interpolation.type === 'linear') {
-            if (tag.interpolation.raw == null) {
-              return 'rawTag linear interpolation must specify \'raw\': ' + tagStr;
-            }
+          if (tag.interpolation.raw.length !== 2) {
+            return 'rawTag linear interpolation \'raw\' must specify two values:'  + tagStr;
+          }
 
-            if (!Array.isArray(tag.interpolation.raw)) {
-              return 'rawTag linear interpolation \'raw\' must be an array:' + tagStr;
-            }
+          if (tag.interpolation.eu == null) {
+            return 'rawTag linear interpolation must specify \'eu\': ' + tagStr;
+          }
 
-            if (tag.interpolation.raw.length !== 2) {
-              return 'rawTag linear interpolation \'raw\' must specify two values:'  + tagStr;
-            }
+          if (!Array.isArray(tag.interpolation.eu)) {
+            return 'rawTag linear interpolation \'eu\' must be an array:' + tagStr;
+          }
 
-            if (tag.interpolation.eu == null) {
-              return 'rawTag linear interpolation must specify \'eu\': ' + tagStr;
-            }
-
-            if (!Array.isArray(tag.interpolation.eu)) {
-              return 'rawTag linear interpolation \'eu\' must be an array:' + tagStr;
-            }
-
-            if (tag.interpolation.eu.length !== 2) {
-              return 'rawTag linear interpolation \'eu\' must specify two values:'  + tagStr;
-            }
+          if (tag.interpolation.eu.length !== 2) {
+            return 'rawTag linear interpolation \'eu\' must specify two values:'  + tagStr;
           }
         }
       }
-    }
+
+      return null;
+    };
 
     if (config.tags != null) {
-      let tagKeys = Object.keys(config.tags);
-      for (let i = 0; i < tagKeys.length; i++) {
-        let tag = config.tags[tagKeys[i]];
-        let tagActionKeys = Object.keys(tag);
-        for (let j = 0; j < tagActionKeys.length; j++) {
-          let rawTagId = tag[tagActionKeys[j]];
-          if (config.rawTags == null || config.rawTags[rawTagId] == null) {
-            return 'rawTag does not exist for tag \'' + tagKeys[i] + '\', action \'' + tagActionKeys[j] + '\'';
+      let tags = config.tags;
+      let keys = Object.keys(config.tags);
+      for (let i = 0; i < keys.length; i++) {
+        let tag = config.tags[keys[i]];
+        let tagStr = JSON.stringify(tag, null, 2);
+        let tagErr = null;
+
+        if (tag.actions == null) {
+          tagErr = tagChecker(tag);
+        } else {
+          let actions = Object.keys(tag.actions);
+          for (let j = 0; j < actions.length; j++) {
+            tagErr = tagChecker(actions[j]);
+            if (!isEmptyString(tagErr)) {
+              break;
+            }
           }
+        }
+
+        if (!isEmptyString(tagErr)) {
+          return tagErr;
         }
       }
     }
@@ -297,6 +301,10 @@ class Driver {
 }
 
 module.exports = Driver;
+
+function isEmptyString(str) {
+  return str == null || str.length === 0;
+}
 
 // class Driver {
 //   constructor(config) {

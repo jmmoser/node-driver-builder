@@ -25,6 +25,6 @@
   },
   "homepage": "https://github.com/jmmoser/node-drivers-builder#readme",
   "dependencies": {
-    "node-drivers": "^1.0.19"
+    "node-drivers": "^1.0.20"
   }
 }
