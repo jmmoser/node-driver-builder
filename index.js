@@ -1,6 +1,5 @@
 'use strict';
 
-const fs = require('fs');
 const Drivers = require('node-drivers');
 
 const INTERPOLATION_TYPES = {
