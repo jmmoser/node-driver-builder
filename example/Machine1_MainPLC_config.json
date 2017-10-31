@@ -1,0 +1,82 @@
+{
+  "connection": {
+    "layers": [
+      {
+        "type": "TCPLayer",
+        "options": {
+          "host": "0.0.0.0",
+          "port": 44818
+        }
+      },
+      "EIPLayer",
+      {
+        "type": "Connection",
+        "options": {
+          "VendorID": 4921,
+          "OriginatorSerialNumber": 42,
+          "ProcessorSlot": 0
+        }
+      },
+      {
+        "type": "ControlLogix"
+      }
+    ],
+    "actions": {
+      "read": "readTag",
+      "write": "writeTag"
+    }
+  },
+
+  "tags": {
+    "Extruder1.Speed.Setpoint": {
+      "address": "R03:10:O.CH6DATA",
+      "interpolation": {
+        "type": "linear",
+        "raw": [0, 32767],
+        "eu": [0, 105]
+      }
+    },
+    "Extruder2.Speed.Setpoint": {
+      "address": "R03:10:O.CH5DATA",
+      "interpolation": {
+        "type": "linear",
+        "raw": [0, 32767],
+        "eu": [0, 127]
+      }
+    },
+    "Extruder3.Speed.Setpoint": {
+      "address": "R03:10:O.CH4DATA",
+      "interpolation": {
+        "type": "linear",
+        "raw": [0, 32767],
+        "eu": [0, 118]
+      }
+    },
+
+
+    "Extruder1.Speed.Actual": {
+      "address": "R03:9:I.CH4DATA",
+      "interpolation": {
+        "type": "linear",
+        "raw": [0, 32767],
+        "eu": [0, 105]
+      }
+    },
+    "Extruder2.Speed.Actual": {
+      "address": "R03:9:I.CH2DATA",
+      "interpolation": {
+        "type": "linear",
+        "raw": [0, 32767],
+        "eu": [0, 127]
+      }
+    },
+    "Extruder3.Speed.Actual": {
+      "address": "R03:9:I.CH0DATA",
+      "interpolation": {
+        "type": "linear",
+        "raw": [0, 32767],
+        "eu": [0, 118]
+      }
+    }
+  }
+}
