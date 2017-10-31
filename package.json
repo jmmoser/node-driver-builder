@@ -1,6 +1,6 @@
 {
   "name": "node-drivers-builder",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Build drivers from configuration files",
   "main": "index.js",
   "scripts": {
