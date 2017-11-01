@@ -11,8 +11,8 @@
   The only thing that is different is the tags have an actions field
   that specifies which (PLC) address to use for the action.
 
-  Notice that the actual code in this example is exactly the same as
-  the readExample!
+  Notice that the code in this example is exactly the same as the
+  readExample.js example!
 */
 
 const Driver = require('node-drivers-builder');
