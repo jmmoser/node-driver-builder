@@ -1,5 +1,5 @@
 {
-  "connection": {
+  "stack": {
     "layers": [
       {
         "type": "TCPLayer",
@@ -36,46 +36,12 @@
         "eu": [0, 105]
       }
     },
-    "Extruder2.Speed.Setpoint": {
-      "address": "R03:10:O.CH5DATA",
-      "interpolation": {
-        "type": "linear",
-        "raw": [0, 32767],
-        "eu": [0, 127]
-      }
-    },
-    "Extruder3.Speed.Setpoint": {
-      "address": "R03:10:O.CH4DATA",
-      "interpolation": {
-        "type": "linear",
-        "raw": [0, 32767],
-        "eu": [0, 118]
-      }
-    },
-
-
     "Extruder1.Speed.Actual": {
       "address": "R03:9:I.CH4DATA",
       "interpolation": {
         "type": "linear",
         "raw": [0, 32767],
         "eu": [0, 105]
-      }
-    },
-    "Extruder2.Speed.Actual": {
-      "address": "R03:9:I.CH2DATA",
-      "interpolation": {
-        "type": "linear",
-        "raw": [0, 32767],
-        "eu": [0, 127]
-      }
-    },
-    "Extruder3.Speed.Actual": {
-      "address": "R03:9:I.CH0DATA",
-      "interpolation": {
-        "type": "linear",
-        "raw": [0, 32767],
-        "eu": [0, 118]
       }
     }
   }
