@@ -16,22 +16,14 @@
 */
 
 const Driver = require('node-drivers-builder');
-
 const config = require('./Machine2_MainPLC_config');
-
 const driver = new Driver(config);
 
-let readExtruder1Speed = driver.action(
-  'read',
-  'Extruder1.Speed.Setpoint'
-);
+let readExtruder1Speed = driver.action('read', 'Extruder1.Speed.Setpoint');
 
 driver.execute(readExtruder1Speed, function(err, res, ctx) {
-  if (err != null) {
-    console.log(err);
-  } else {
-    console.log(driver.interpolate(ctx, res));
-  }
+  if (err != null) console.log(err);
+  else console.log(driver.interpolate(ctx, res));
 
   driver.close(function() {
     console.log('closed');

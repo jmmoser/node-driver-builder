@@ -17,8 +17,8 @@ driver.execute(readExtruder1Speed, function(err, res, ctx) {
     /*
       The driver uses the context variable, 'ctx', to determine
       if we need to interpolate the value from raw-to-eu or
-      eu-to-raw.  It interpolates raw-to-eu since the value was
-      received.
+      eu-to-raw.  In this case it interpolates raw-to-eu since
+      the value was received.
     */
     console.log(driver.interpolate(ctx, res));
   }
