@@ -1,6 +1,7 @@
 'use strict';
 
 const Drivers = require('node-drivers');
+const Interpolation = require('./interpolation');
 
 const INTERPOLATION_TYPES = {
   'linear': 1
@@ -138,11 +139,14 @@ class Driver {
   }
 
   interpolate(ctx, value) {
-    if (ctx.action.tag.interpolation != null) {
+    let interpolation = ctx.action.tag.interpolation;
+    if (interpolation != null) {
       if (ctx.direction === 'in') {
-        return interpolateIn(ctx.action.tag.interpolation, value);
+        // return interpolateIn(ctx.action.tag.interpolation, value);
+        return Interpolation.interpolateIn(interpolation, value);
       } else if (ctx.direction === 'out') {
-        return interpolateOut(ctx.action.tag.interpolation, value);
+        // return interpolateOut(ctx.action.tag.interpolation, value);
+        return Interpolation.interpolateOut(interpolation, value);
       }
     }
     return value;
@@ -305,42 +309,42 @@ function isEmptyString(str) {
 
 
 
-function interpolateOut(interpolation, value) {
-  switch (interpolation.type) {
-    case 'linear':
-      value = linearInterpolateOut(interpolation, value);
-      break;
-    default:
-
-  }
-  return value;
-}
-
-function interpolateIn(interpolation, value) {
-  switch (interpolation.type) {
-    case 'linear':
-      value = linearInterpolateIn(interpolation, value);
-      break;
-    default:
-
-  }
-  return value;
-}
-
-function linearInterpolateOut(interpolation, value) {
-  let x0 = interpolation.eu[0];
-  let x1 = interpolation.eu[1];
-  let y0 = interpolation.raw[0];
-  let y1 = interpolation.raw[1];
-
-  return y0 + (value - x0) * (y1 - y0) / (x1 - x0);
-}
-
-function linearInterpolateIn(interpolation, value) {
-  let x0 = interpolation.raw[0];
-  let x1 = interpolation.raw[1];
-  let y0 = interpolation.eu[0];
-  let y1 = interpolation.eu[1];
-
-  return y0 + (value - x0) * (y1 - y0) / (x1 - x0);
-}
+// function interpolateOut(interpolation, value) {
+//   switch (interpolation.type) {
+//     case 'linear':
+//       value = linearInterpolateOut(interpolation, value);
+//       break;
+//     default:
+//
+//   }
+//   return value;
+// }
+//
+// function interpolateIn(interpolation, value) {
+//   switch (interpolation.type) {
+//     case 'linear':
+//       value = linearInterpolateIn(interpolation, value);
+//       break;
+//     default:
+//
+//   }
+//   return value;
+// }
+//
+// function linearInterpolateOut(interpolation, value) {
+//   let x0 = interpolation.eu[0];
+//   let x1 = interpolation.eu[1];
+//   let y0 = interpolation.raw[0];
+//   let y1 = interpolation.raw[1];
+//
+//   return y0 + (value - x0) * (y1 - y0) / (x1 - x0);
+// }
+//
+// function linearInterpolateIn(interpolation, value) {
+//   let x0 = interpolation.raw[0];
+//   let x1 = interpolation.raw[1];
+//   let y0 = interpolation.eu[0];
+//   let y1 = interpolation.eu[1];
+//
+//   return y0 + (value - x0) * (y1 - y0) / (x1 - x0);
+// }
